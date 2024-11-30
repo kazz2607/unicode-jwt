@@ -50,13 +50,15 @@ class AuthController extends Controller
             $decode = JWTAuth::getJWTProvider()->decode($refreshToken);
             /** Xử lý cấp lại Token mới
              * => Lấy thông tin user
-             * 
             */
             $user = User::find($decode['user_id']);
             if (!$user){
                 return response()->json(['error' => 'User Not Found'], 404);
             }
-            $token = auth('api')->login($user);
+            auth('api')->invalidate(); // Vô hiệu hoá Token hiệm tại
+
+            $token = auth('api')->login($user); // Tạo mới Token
+
             $refreshToken = $this->createRefreshToken();
             return $this->respondWithToken($token,$refreshToken);
 

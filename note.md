@@ -11,10 +11,18 @@ Server -> Kiểm tra token có hợp lệ hay không ? -> Decode Payload -> Truy
 ## Bảo mật Token
 
 AccessToken : Nếu bị đánh cắp => Hacker khai thác dựa vào token
+
 -> Giải pháp : Hạ thấp thời gian sống của AccessToken -> Gây phiền phức cho người dùng
 -> Cần bổ sung : RefreshToken -> Thời gian sống lâu hơn -> Dùng cấp lại AccessToken mới sau khi AccessToken cũ hết hạn
 -> Khi logout -> Thêm token và Backlist -> Khi Authorization -> Cần kiểm tra token có trong backlist không
     + Tính hợp lệ
     + Thời gian sống
     + Có trong blacklist hay không
+
+## Các vến đề khi Refresh Token hết hạn
+
+- Refresh Token hết hạn => Client xử lý logout => Call API /logout
+- Cấp lại AccessToken mới bằng Refresh Token => AccessToken cũ vẫn hoạt động
+
+Giải pháp : Khi cấp lại AccessToken mới => Thêm AccessToken cũ vào Blacklist
 
